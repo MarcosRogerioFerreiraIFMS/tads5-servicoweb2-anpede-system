@@ -20,7 +20,7 @@ public class EquipamentoService {
 	@Transactional(readOnly = true)
 	public List<EquipamentoDTO> findAll(){
 		List<Equipamento> lista = repository.findAll();
-		return lista.stream().map(x -> new EquipamentoDTO(x)).collect(Collectors.toList());
+		return lista.stream().map(x -> new EquipamentoDTO(x, x.getEquipamentosItem())).collect(Collectors.toList());
 	}
 	
 	/*

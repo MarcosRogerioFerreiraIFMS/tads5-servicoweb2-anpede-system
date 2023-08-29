@@ -18,11 +18,11 @@ public class EquipamentoItemDTO implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EquipamentoItemDTO(Long id, String numeroSerie, Situacao situação, Equipamento equipameto) {
+	public EquipamentoItemDTO(Long id, String numeroSerie, Situacao situação, Equipamento equipamento) {
 		this.id = id;
 		this.numeroSerie = numeroSerie;
 		this.situação = situação;
-		this.equipameto = equipameto;
+		this.equipameto = equipamento;
 	}
 	
 	public EquipamentoItemDTO(EquipamentoItem entity) {

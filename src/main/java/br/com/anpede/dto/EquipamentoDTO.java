@@ -1,8 +1,12 @@
 package br.com.anpede.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.anpede.entities.Equipamento;
+import br.com.anpede.entities.EquipamentoItem;
 import br.com.anpede.entities.enums.CategoriaEquipamento;
 
 public class EquipamentoDTO implements Serializable {
@@ -16,6 +20,8 @@ public class EquipamentoDTO implements Serializable {
 	private String foto;
 	private Double valor;
 	private Integer quantidade;
+	
+	private List<EquipamentoItem> equipamentosItem = new ArrayList<>();
 	
 	public EquipamentoDTO() {
 		// TODO Auto-generated constructor stub
@@ -42,6 +48,17 @@ public class EquipamentoDTO implements Serializable {
 		this.foto = entity.getFoto();
 		this.valor = entity.getValor();
 		this.quantidade = entity.getQuantidade();
+	}
+	
+	public EquipamentoDTO(Equipamento entity, List<EquipamentoItem> equipamentosItem) {
+		this(entity);
+		this.equipamentosItem = equipamentosItem.stream().map(x -> new EquipamentoItem(
+				x.getId(), x.getNumeroSerie(), x.getSituacao(), null))
+				.collect(Collectors.toList());
+	}
+
+	public List<EquipamentoItem> getEquipamentosItem() {
+		return equipamentosItem;
 	}
 
 	public Long getId() {

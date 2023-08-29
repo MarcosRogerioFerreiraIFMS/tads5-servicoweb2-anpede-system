@@ -1,16 +1,21 @@
 package br.com.anpede.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.anpede.entities.enums.CategoriaEquipamento;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,12 +36,16 @@ public class Equipamento implements Serializable {
 	private Double valor;
 	private Integer quantidade;
 	
+	@OneToMany(mappedBy = "equipamento", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<EquipamentoItem> equipamentosItem;
+	
 	public Equipamento() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Equipamento(Long id, String nome, String descricao, String marca, CategoriaEquipamento categoria,
-			String foto, Double valor, Integer quantidade) {
+			String foto, Double valor, Integer quantidade, List<EquipamentoItem> equipamentosItem) {
 		this.id = id;
 		this.nome = nome;
 		this.descricao = descricao;
@@ -45,6 +54,11 @@ public class Equipamento implements Serializable {
 		this.foto = foto;
 		this.valor = valor;
 		this.quantidade = quantidade;
+		this.equipamentosItem = equipamentosItem;
+	}
+
+	public List<EquipamentoItem> getEquipamentosItem() {
+		return equipamentosItem;
 	}
 
 	public Long getId() {

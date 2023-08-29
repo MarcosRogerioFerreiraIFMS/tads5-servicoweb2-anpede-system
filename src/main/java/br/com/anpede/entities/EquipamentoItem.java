@@ -25,6 +25,7 @@ public class EquipamentoItem implements Serializable {
 	private String numeroSerie;
 	@Enumerated(EnumType.STRING)
 	private Situacao situacao;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_equipamento_fk")
 	private Equipamento equipamento;
