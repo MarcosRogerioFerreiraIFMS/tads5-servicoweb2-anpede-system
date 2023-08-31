@@ -24,6 +24,12 @@ public class EquipamentoResource {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@GetMapping(value = "/{equipamentos}")
+	public ResponseEntity<List<EquipamentoDTO>> findAllEquipamento() {
+		List<EquipamentoDTO> list = service.findAll();
+		return ResponseEntity.ok().body(list);
+	}
+	
 	/*
 	
 	@GetMapping(value = "/{id}")

@@ -53,7 +53,7 @@ public class EquipamentoDTO implements Serializable {
 	public EquipamentoDTO(Equipamento entity, List<EquipamentoItem> equipamentosItem) {
 		this(entity);
 		this.equipamentosItem = equipamentosItem.stream().map(x -> new EquipamentoItem(
-				x.getId(), x.getNumeroSerie(), x.getSituacao(), null))
+				x.getId(), x.getNumeroSerie(), x.getSituacao()))
 				.collect(Collectors.toList());
 	}
 

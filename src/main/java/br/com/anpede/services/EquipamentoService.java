@@ -23,6 +23,12 @@ public class EquipamentoService {
 		return lista.stream().map(x -> new EquipamentoDTO(x, x.getEquipamentosItem())).collect(Collectors.toList());
 	}
 	
+	@Transactional(readOnly = true)
+	public List<EquipamentoDTO> findAllEquipamento(){
+		List<Equipamento> lista = repository.findAll();
+		return lista.stream().map(x -> new EquipamentoDTO(x)).collect(Collectors.toList());
+	}
+	
 	/*
 	@Transactional(readOnly = true)
 	public AssociadoDTO findById(Long id) {

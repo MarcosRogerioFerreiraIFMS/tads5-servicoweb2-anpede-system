@@ -34,11 +34,10 @@ public class EquipamentoItem implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public EquipamentoItem(Long id, String numeroSerie, Situacao situacao, Equipamento equipamento) {
+	public EquipamentoItem(Long id, String numeroSerie, Situacao situacao) {
 		this.id = id;
 		this.numeroSerie = numeroSerie;
 		this.situacao = situacao;
-		this.equipamento = equipamento;
 	}
 
 	public Long getId() {
