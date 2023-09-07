@@ -1,15 +1,19 @@
 package br.com.anpede.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.anpede.dto.EquipamentoItemDTO;
 import br.com.anpede.entities.EquipamentoItem;
 import br.com.anpede.repositories.EquipamentoItemRepository;
+import br.com.anpede.services.exceptions.DataBaseException;
+import br.com.anpede.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class EquipamentoItemService {
@@ -23,62 +27,48 @@ public class EquipamentoItemService {
 		return lista.stream().map(x -> new EquipamentoItemDTO(x)).collect(Collectors.toList());
 	}
 	
-	/*
 	@Transactional(readOnly = true)
-	public AssociadoDTO findById(Long id) {
-		Optional<Associado> obj = repository.findById(id);
-		
-		Associado entity = obj.orElseThrow(() -> new ResourceNotFoundException("O registro solicitado não foi localizado."));
-		return new AssociadoDTO(entity);		
+	public EquipamentoItemDTO findById(Long id){
+		Optional<EquipamentoItem> obj = repository.findById(id);
+		EquipamentoItem entity = obj.orElseThrow(() -> new ResourceNotFoundException("O registro não foi localizado na base de dados"));
+		return new EquipamentoItemDTO(entity);
 	}
-
+	
 	@Transactional
-	public AssociadoDTO insert(AssociadoDTO dto) {
-		Associado entity = new Associado();
-		entity.setNome(dto.getNome());
-		entity.setCPF(dto.getCPF());
-		entity.setDataNascimento(dto.getDataNascimento());
-		entity.setTelefone(dto.getTelefone());
-		entity.setEmail(dto.getEmail());
-		entity.setEndereco(dto.getEndereco());
-		
+	public EquipamentoItemDTO insert(EquipamentoItemDTO dto) {
+		EquipamentoItem entity = new EquipamentoItem();		
+		converterEntityToDTO(entity, dto);				
 		entity = repository.save(entity);
-
-		return new AssociadoDTO(entity);
+		return new EquipamentoItemDTO(entity);
 	}
-
+	
 	@Transactional
-	public AssociadoDTO update(Long id, AssociadoDTO dto) {
-		
+	public EquipamentoItemDTO update(Long id, EquipamentoItemDTO dto) {
 		try {
-			Associado entity = repository.getReferenceById(id);
+			EquipamentoItem entity = repository.getReferenceById(id);
 			
-			entity.setNome(dto.getNome());
-			entity.setCPF(dto.getCPF());
-			entity.setDataNascimento(dto.getDataNascimento());
-			entity.setTelefone(dto.getTelefone());
-			entity.setEmail(dto.getEmail());
-			entity.setEndereco(dto.getEndereco());
+			converterEntityToDTO(entity, dto);
 			
 			entity = repository.save(entity);
-	
-			return new AssociadoDTO(entity);
-		} catch(EntityNotFoundException e) {
-			throw new ResourceNotFoundException(
-					"O recurso com o ID "+id+" não foi localizado");
+			return new EquipamentoItemDTO(entity);
+		} catch (jakarta.persistence.EntityNotFoundException e) {
+			throw new ResourceNotFoundException("O recurso com o ID "+id+" não foi localizado");
 		}
 	}
-
+	
+	private void converterEntityToDTO(EquipamentoItem entity, EquipamentoItemDTO dto) {
+		entity.setNumeroSerie(dto.getNumeroSerie());
+		entity.setSituacao(dto.getSituacao());
+		entity.setEquipamento(dto.getEquipamento());
+	}
+	
 	public void delete(Long id) {
 		try {
-		if(repository.existsById(id)) {
 			repository.deleteById(id);
-		}
-		}catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("O registro solicitado não foi localizado.");
-		}
+		} catch (DataIntegrityViolationException e) {
+			throw new DataBaseException("Violação de Integridade");
+		}			
 	}
-	*/
 }
 
 

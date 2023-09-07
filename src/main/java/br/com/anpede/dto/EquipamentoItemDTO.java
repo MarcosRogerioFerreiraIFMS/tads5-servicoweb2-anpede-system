@@ -11,8 +11,8 @@ public class EquipamentoItemDTO implements Serializable {
 	
 	private Long id;
 	private String numeroSerie;
-	private Situacao situação;
-	private Equipamento equipameto;
+	private Situacao situacao;
+	private Equipamento equipamento;
 	
 	public EquipamentoItemDTO() {
 		// TODO Auto-generated constructor stub
@@ -21,15 +21,15 @@ public class EquipamentoItemDTO implements Serializable {
 	public EquipamentoItemDTO(Long id, String numeroSerie, Situacao situação, Equipamento equipamento) {
 		this.id = id;
 		this.numeroSerie = numeroSerie;
-		this.situação = situação;
-		this.equipameto = equipamento;
+		this.situacao = situação;
+		this.equipamento = equipamento;
 	}
 	
 	public EquipamentoItemDTO(EquipamentoItem entity) {
 		this.id = entity.getId();
 		this.numeroSerie = entity.getNumeroSerie();
-		this.situação = entity.getSituacao();
-		this.equipameto = entity.getEquipamento();
+		this.situacao = entity.getSituacao();
+		this.equipamento = entity.getEquipamento();
 	}
 
 	public Long getId() {
@@ -48,19 +48,19 @@ public class EquipamentoItemDTO implements Serializable {
 		this.numeroSerie = numeroSerie;
 	}
 
-	public Situacao getSituação() {
-		return situação;
+	public Situacao getSituacao() {
+		return situacao;
 	}
 
-	public void setSituação(Situacao situação) {
-		this.situação = situação;
+	public void setSituação(Situacao situacao) {
+		this.situacao = situacao;
 	}
 
-	public Equipamento getEquipameto() {
-		return equipameto;
+	public Equipamento getEquipamento() {
+		return equipamento;
 	}
 
-	public void setEquipameto(Equipamento equipameto) {
-		this.equipameto = equipameto;
+	public void setEquipamento(Equipamento equipamento) {
+		this.equipamento = equipamento;
 	}
 }
