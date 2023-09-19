@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.anpede.dto.EquipamentoItemDTO;
+import br.com.anpede.dto.EquipamentoItemSerieMarcaDTO;
+import br.com.anpede.dto.EquipamentoItemSituacaoDTO;
+import br.com.anpede.entities.enums.Situacao;
 import br.com.anpede.services.EquipamentoItemService;
 
 @RestController
@@ -36,6 +39,34 @@ public class EquipamentoItemResource {
 		EquipamentoItemDTO dto = service.findById(id);
 		return ResponseEntity.ok().body(dto);	
 	}
+	
+	// START - Query Methods=====================================================
+	@GetMapping(value = "/serie/{numeroSerie}")
+	public ResponseEntity<EquipamentoItemDTO> findByNumeroSerie(@PathVariable String numeroSerie){
+		EquipamentoItemDTO dto = service.findByNumeroSerie(numeroSerie);
+		return ResponseEntity.ok().body(dto);
+	}
+	
+	@GetMapping(value = "/situacao/{situacao}")
+	public ResponseEntity<List<EquipamentoItemDTO>> findBySituacao(@PathVariable Situacao situacao){
+		List<EquipamentoItemDTO> lista = service.findBySituacao(situacao);
+		return ResponseEntity.ok().body(lista);
+	}
+	// END - Query Methods=====================================================
+	
+	// START - @Query - Consultas Customizadas=================================
+	@GetMapping(value = "/situacaosql/{situacao}")
+	public ResponseEntity<List<EquipamentoItemSituacaoDTO>> findBySituacaoSQL(@PathVariable Situacao situacao){
+		List<EquipamentoItemSituacaoDTO> lista = service.findBySituacaoSQL(situacao);
+		return ResponseEntity.ok().body(lista);
+	}
+	
+	@GetMapping(value = "/seriemarcasql/{marca}")
+	public ResponseEntity<List<EquipamentoItemSerieMarcaDTO>> findBySerieMarcaSQL(@PathVariable String marca){
+		List<EquipamentoItemSerieMarcaDTO> lista = service.findBySerieMarcaSQL(marca);
+		return ResponseEntity.ok().body(lista);
+	}
+	// END - @Query - Consultas Customizadas===================================
 	
 	@PostMapping
 	public ResponseEntity<EquipamentoItemDTO> insert(@RequestBody EquipamentoItemDTO dto){

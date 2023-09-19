@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.anpede.dto.EquipamentoItemDTO;
+import br.com.anpede.dto.EquipamentoItemSerieMarcaDTO;
+import br.com.anpede.dto.EquipamentoItemSituacaoDTO;
 import br.com.anpede.entities.EquipamentoItem;
+import br.com.anpede.entities.enums.Situacao;
 import br.com.anpede.repositories.EquipamentoItemRepository;
 import br.com.anpede.services.exceptions.DataBaseException;
 import br.com.anpede.services.exceptions.ResourceNotFoundException;
@@ -33,6 +36,32 @@ public class EquipamentoItemService {
 		EquipamentoItem entity = obj.orElseThrow(() -> new ResourceNotFoundException("O registro não foi localizado na base de dados"));
 		return new EquipamentoItemDTO(entity);
 	}
+	
+	// START - Query Methods=====================================================
+	@Transactional(readOnly = true)
+	public EquipamentoItemDTO findByNumeroSerie(String numeroSerie){
+		EquipamentoItem obj = repository.findByNumeroSerie(numeroSerie);
+		return new EquipamentoItemDTO(obj);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<EquipamentoItemDTO> findBySituacao(Situacao situacao){
+		List<EquipamentoItem> lista = repository.findBySituacao(situacao);
+		return lista.stream().map(x -> new EquipamentoItemDTO(x)).collect(Collectors.toList());
+	}
+	// END - Query Methods=====================================================
+	
+	// START - @Query - Consultas customizadas=================================
+	@Transactional(readOnly = true)
+	public List<EquipamentoItemSituacaoDTO> findBySituacaoSQL(Situacao situacao){
+		return repository.findBySituacaoSQL(situacao);
+	}
+	
+	@Transactional(readOnly = true)
+	public List<EquipamentoItemSerieMarcaDTO> findBySerieMarcaSQL(String marca){
+		return repository.findBySerieMarcaSQL(marca);
+	}
+	// END - @Query - Consultas customizadas===================================
 	
 	@Transactional
 	public EquipamentoItemDTO insert(EquipamentoItemDTO dto) {
