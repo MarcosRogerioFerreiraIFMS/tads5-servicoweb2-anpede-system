@@ -2,12 +2,19 @@ package br.com.anpede.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,22 +29,32 @@ public class Associado implements Serializable {
 	private String CPF;
 	private LocalDate dataNascimento;
 	private String telefone;
-	private String email;
 	private String endereco;
+	@Column(unique = true)
+	private String email;
+	private String senha;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_associado_role",
+			joinColumns = @JoinColumn(name = "associado_id"),
+			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+	
 	
 	public Associado() {
 		
 	}
 
-	public Associado(Long id, String nome, String CPF, LocalDate dataNascimento, String telefone, String email,
-			String endereco) {
+	public Associado(Long id, String nome, String CPF, LocalDate dataNascimento, String telefone, 
+			String endereco, String email, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.CPF = CPF;
 		this.dataNascimento = dataNascimento;
 		this.telefone = telefone;
-		this.email = email;
 		this.endereco = endereco;
+		this.email = email;
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -88,12 +105,24 @@ public class Associado implements Serializable {
 		this.email = email;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public String getEndereco() {
 		return endereco;
 	}
 
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
+	}
+	
+	public Set<Role> getRoles() {
+		return roles;
 	}
 
 	@Override

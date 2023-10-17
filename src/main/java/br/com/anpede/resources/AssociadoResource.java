@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.anpede.dto.AssociadoDTO;
+import br.com.anpede.dto.AssociadoInsertDTO;
 import br.com.anpede.entities.Associado;
 import br.com.anpede.services.AssociadoService;
 
@@ -39,14 +40,14 @@ public class AssociadoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AssociadoDTO> insert(@RequestBody AssociadoDTO dto){
-		dto = service.insert(dto);
+	public ResponseEntity<AssociadoDTO> insert(@RequestBody AssociadoInsertDTO dto){
+		AssociadoDTO associdadoDTO = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder
 					.fromCurrentRequest()
 					.path("/{id}")
-					.buildAndExpand(dto.getId())
+					.buildAndExpand(associdadoDTO.getId())
 					.toUri();
-		return ResponseEntity.created(uri).body(null);
+		return ResponseEntity.created(uri).body(associdadoDTO);
 	}
 	
 	@PutMapping(value = "/{id}")

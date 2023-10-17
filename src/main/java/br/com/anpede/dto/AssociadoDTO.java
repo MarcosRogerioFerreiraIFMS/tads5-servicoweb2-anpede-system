@@ -2,8 +2,11 @@ package br.com.anpede.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import br.com.anpede.entities.Associado;
+import br.com.anpede.entities.Role;
 
 public class AssociadoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -13,8 +16,11 @@ public class AssociadoDTO implements Serializable {
 	private String CPF;
 	private LocalDate dataNascimento;
 	private String telefone;
-	private String email;
 	private String endereco;
+	private String email;
+	
+	private Set<RoleDTO> roles = new HashSet<>();
+	
 	
 	public AssociadoDTO() {
 		// TODO Auto-generated constructor stub
@@ -39,6 +45,7 @@ public class AssociadoDTO implements Serializable {
 		this.telefone = entity.getTelefone();
 		this.email = entity.getEmail();
 		this.endereco = entity.getEndereco();
+		entity.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
 	}
 
 	public Long getId() {
@@ -96,4 +103,8 @@ public class AssociadoDTO implements Serializable {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
+
+	public Set<RoleDTO> getRoles() {
+		return roles;
+	}	
 }
