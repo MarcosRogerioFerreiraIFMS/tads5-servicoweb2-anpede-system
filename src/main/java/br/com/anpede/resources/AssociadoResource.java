@@ -19,6 +19,7 @@ import br.com.anpede.dto.AssociadoDTO;
 import br.com.anpede.dto.AssociadoInsertDTO;
 import br.com.anpede.entities.Associado;
 import br.com.anpede.services.AssociadoService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/associados")
@@ -40,7 +41,7 @@ public class AssociadoResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<AssociadoDTO> insert(@RequestBody AssociadoInsertDTO dto){
+	public ResponseEntity<AssociadoDTO> insert(@Valid @RequestBody AssociadoInsertDTO dto){
 		AssociadoDTO associdadoDTO = service.insert(dto);
 		URI uri = ServletUriComponentsBuilder
 					.fromCurrentRequest()
@@ -53,7 +54,7 @@ public class AssociadoResource {
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<AssociadoDTO> update(
 			@PathVariable Long id,
-			@RequestBody AssociadoDTO dto){
+			@Valid @RequestBody AssociadoDTO dto){
 		dto = service.update(id, dto);
 		return ResponseEntity.ok().body(dto);
 	}

@@ -7,16 +7,24 @@ import java.util.Set;
 
 import br.com.anpede.entities.Associado;
 import br.com.anpede.entities.Role;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 public class AssociadoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
+	@Size(min = 5, max = 100, message = "Deve ter entre 5 e 100 caracteres")
+	@NotBlank(message = "Campo obrigatório")
 	private String nome;
 	private String CPF;
+	@PastOrPresent(message = "A data não deve ser futura")
 	private LocalDate dataNascimento;
 	private String telefone;
 	private String endereco;
+	@Email(message = "Entrar com um email válido")
 	private String email;
 	
 	private Set<RoleDTO> roles = new HashSet<>();
