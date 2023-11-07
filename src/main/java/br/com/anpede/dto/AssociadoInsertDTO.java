@@ -1,5 +1,8 @@
 package br.com.anpede.dto;
 
+import br.com.anpede.services.validation.AssociadoInsertValid;
+
+@AssociadoInsertValid
 public class AssociadoInsertDTO extends AssociadoDTO {
 	private static final long serialVersionUID = 1L;
 	

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import br.com.anpede.entities.Associado;
 import br.com.anpede.entities.Role;
+import br.com.anpede.services.validation.AssociadoUpdateValid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.anpede.dto.AssociadoDTO;
 import br.com.anpede.dto.AssociadoInsertDTO;
+import br.com.anpede.dto.AssociadoUpdateDTO;
 import br.com.anpede.dto.RoleDTO;
 import br.com.anpede.entities.Associado;
 import br.com.anpede.entities.Role;
@@ -58,7 +59,7 @@ public class AssociadoService {
 	}
 
 	@Transactional
-	public AssociadoDTO update(Long id, AssociadoDTO dto) {
+	public AssociadoDTO update(Long id, AssociadoUpdateDTO dto) {
 		try {
 			Associado entity = repository.getReferenceById(id);
 			copiarDTOParaEntidade(dto, entity);						

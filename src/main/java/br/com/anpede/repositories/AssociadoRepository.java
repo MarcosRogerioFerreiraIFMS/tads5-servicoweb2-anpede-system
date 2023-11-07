@@ -8,4 +8,5 @@ import br.com.anpede.entities.Associado;
 @Repository
 public interface AssociadoRepository extends JpaRepository<Associado, Long> {
 
+	Associado findByEmail(String email);
 }
